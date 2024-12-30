@@ -13,7 +13,6 @@ namespace Xabbuh\XApi\Model;
 
 use Exception;
 use Ramsey\Uuid\Uuid as RamseyUuid;
-use Rhumsaa\Uuid\Uuid as RhumsaaUuid;
 
 /**
  * @author Jérôme Parmentier <jerome.parmentier@acensi.fr>
@@ -21,9 +20,9 @@ use Rhumsaa\Uuid\Uuid as RhumsaaUuid;
 final class Uuid
 {
     /**
-     * @var RamseyUuid|RhumsaaUuid;
+     * @var RamseyUuid;
      */
-    private $uuid;
+    private RamseyUuid $uuid;
 
     private function __construct($uuid)
     {
@@ -32,10 +31,6 @@ final class Uuid
 
     public static function fromString(string $uuid): self
     {
-        if (class_exists(RhumsaaUuid::class)) {
-            return new self(RhumsaaUuid::fromString($uuid));
-        }
-
         return new self(RamseyUuid::fromString($uuid));
     }
 
@@ -52,10 +47,6 @@ final class Uuid
      */
     public static function uuid1($node = null, ?int $clockSeq = null): self
     {
-        if (class_exists(RhumsaaUuid::class)) {
-            return new self(RhumsaaUuid::uuid1($node, $clockSeq));
-        }
-
         return new self(RamseyUuid::uuid1($node, $clockSeq));
     }
 
@@ -68,10 +59,6 @@ final class Uuid
      */
     public static function uuid3(string $ns, string $name): self
     {
-        if (class_exists(RhumsaaUuid::class)) {
-            return new self(RhumsaaUuid::uuid3($ns, $name));
-        }
-
         return new self(RamseyUuid::uuid3($ns, $name));
     }
 
@@ -82,10 +69,6 @@ final class Uuid
      */
     public static function uuid4(): self
     {
-        if (class_exists(RhumsaaUuid::class)) {
-            return new self(RhumsaaUuid::uuid4());
-        }
-
         return new self(RamseyUuid::uuid4());
     }
 
@@ -98,10 +81,6 @@ final class Uuid
      */
     public static function uuid5(string $ns, string $name): self
     {
-        if (class_exists(RhumsaaUuid::class)) {
-            return new self(RhumsaaUuid::uuid5($ns, $name));
-        }
-
         return new self(RamseyUuid::uuid5($ns, $name));
     }
 
