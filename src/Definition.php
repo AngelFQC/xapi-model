@@ -34,14 +34,19 @@ namespace Xabbuh\XApi\Model;
  */
 class Definition
 {
-    private $name;
-    private $description;
-    private $type;
-    private $moreInfo;
-    private $extensions;
+    private ?LanguageMap $name;
+    private ?LanguageMap $description;
+    private ?IRI $type;
+    private ?IRL $moreInfo;
+    private ?Extensions $extensions;
 
-    public function __construct(LanguageMap $name = null, LanguageMap $description = null, IRI $type = null, IRL $moreInfo = null, Extensions $extensions = null)
-    {
+    public function __construct(
+        ?LanguageMap $name = null,
+        ?LanguageMap $description = null,
+        ?IRI $type = null,
+        ?IRL $moreInfo = null,
+        ?Extensions $extensions = null
+    ) {
         $this->name = $name;
         $this->description = $description;
         $this->type = $type;
@@ -49,7 +54,7 @@ class Definition
         $this->extensions = $extensions;
     }
 
-    public function withName(LanguageMap $name = null): self
+    public function withName(?LanguageMap $name = null): self
     {
         $definition = clone $this;
         $definition->name = $name;
@@ -57,7 +62,7 @@ class Definition
         return $definition;
     }
 
-    public function withDescription(LanguageMap $description = null): self
+    public function withDescription(?LanguageMap $description = null): self
     {
         $definition = clone $this;
         $definition->description = $description;
@@ -65,7 +70,7 @@ class Definition
         return $definition;
     }
 
-    public function withType(IRI $type = null): self
+    public function withType(?IRI $type = null): self
     {
         $definition = clone $this;
         $definition->type = $type;
@@ -73,7 +78,7 @@ class Definition
         return $definition;
     }
 
-    public function withMoreInfo(IRL $moreInfo = null): self
+    public function withMoreInfo(?IRL $moreInfo = null): self
     {
         $definition = clone $this;
         $definition->moreInfo = $moreInfo;
@@ -90,7 +95,7 @@ class Definition
     }
 
     /**
-     * Returns the human readable names.
+     * Returns the human-readable names.
      */
     public function getName(): ?LanguageMap
     {
@@ -98,7 +103,7 @@ class Definition
     }
 
     /**
-     * Returns the human readable descriptions.
+     * Returns the human-readable descriptions.
      */
     public function getDescription(): ?LanguageMap
     {

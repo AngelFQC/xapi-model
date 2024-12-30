@@ -25,16 +25,27 @@ use Xabbuh\XApi\Model\LanguageMap;
  */
 final class MatchingInteractionDefinition extends InteractionDefinition
 {
-    private $source;
-    private $target;
+    /**
+     * @var array<int, InteractionComponent>|null
+     */
+    private ?array $source;
+    private ?array $target;
 
     /**
-     * @param string[]|null               $correctResponsesPattern
-     * @param InteractionComponent[]|null $source
-     * @param InteractionComponent[]|null $target
+     * @param array<int, string>|null               $correctResponsesPattern
+     * @param array<int, InteractionComponent>|null $source
+     * @param array<int, InteractionComponent>|null $target
      */
-    public function __construct(LanguageMap $name = null, LanguageMap $description = null, IRI $type = null, IRL $moreInfo = null, Extensions $extensions = null, array $correctResponsesPattern = null, array $source = null, array $target = null)
-    {
+    public function __construct(
+        ?LanguageMap $name = null,
+        ?LanguageMap $description = null,
+        ?IRI $type = null,
+        ?IRL $moreInfo = null,
+        ?Extensions $extensions = null,
+        ?array $correctResponsesPattern = null,
+        ?array $source = null,
+        ?array $target = null
+    ) {
         parent::__construct($name, $description, $type, $moreInfo, $extensions, $correctResponsesPattern);
 
         $this->source = $source;
@@ -42,9 +53,9 @@ final class MatchingInteractionDefinition extends InteractionDefinition
     }
 
     /**
-     * @param InteractionComponent[]|null $source
+     * @param array<int, InteractionComponent>|null $source
      */
-    public function withSource(array $source = null): self
+    public function withSource(?array $source = null): self
     {
         $interaction = clone $this;
         $interaction->source = $source;
@@ -53,9 +64,9 @@ final class MatchingInteractionDefinition extends InteractionDefinition
     }
 
     /**
-     * @param InteractionComponent[]|null $target
+     * @param array<int, InteractionComponent>|null $target
      */
-    public function withTarget(array $target = null): self
+    public function withTarget(?array $target = null): self
     {
         $interaction = clone $this;
         $interaction->target = $target;
@@ -64,7 +75,7 @@ final class MatchingInteractionDefinition extends InteractionDefinition
     }
 
     /**
-     * @return InteractionComponent[]|null
+     * @return array<int, InteractionComponent>|null
      */
     public function getSource(): ?array
     {
@@ -72,7 +83,7 @@ final class MatchingInteractionDefinition extends InteractionDefinition
     }
 
     /**
-     * @return InteractionComponent[]|null
+     * @return array<int, InteractionComponent>|null
      */
     public function getTarget(): ?array
     {

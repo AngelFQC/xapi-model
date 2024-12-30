@@ -18,13 +18,16 @@ namespace Xabbuh\XApi\Model;
  */
 final class Group extends Actor
 {
-    private $members = array();
+    private array $members;
 
     /**
-     * @param Agent[] $members
+     * @param array<int, Agent> $members
      */
-    public function __construct(InverseFunctionalIdentifier $iri = null, string $name = null, array $members = array())
-    {
+    public function __construct(
+        ?InverseFunctionalIdentifier $iri = null,
+        ?string $name = null,
+        array $members = []
+    ) {
         parent::__construct($iri, $name);
 
         $this->members = $members;
@@ -33,7 +36,7 @@ final class Group extends Actor
     /**
      * Returns the members of this group.
      *
-     * @return Agent[]
+     * @return array<int, Agent>
      */
     public function getMembers(): array
     {
@@ -43,20 +46,20 @@ final class Group extends Actor
     /**
      * {@inheritdoc}
      */
-    public function equals(StatementObject $actor): bool
+    public function equals(StatementObject $object): bool
     {
-        if (!parent::equals($actor)) {
+        if (!parent::equals($object)) {
             return false;
         }
 
-        /** @var Group $actor */
+        /** @var Group $object */
 
-        if (count($this->members) !== count($actor->members)) {
+        if (count($this->members) !== count($object->members)) {
             return false;
         }
 
         foreach ($this->members as $member) {
-            if (!in_array($member, $actor->members)) {
+            if (!in_array($member, $object->members)) {
                 return false;
             }
         }

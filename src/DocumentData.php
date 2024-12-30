@@ -11,22 +11,24 @@
 
 namespace Xabbuh\XApi\Model;
 
+use ArrayAccess;
+use InvalidArgumentException;
 use Xabbuh\XApi\Common\Exception\UnsupportedOperationException;
 
 /**
  * An xAPI document's data.
  *
  * Document data are immutable. This means that they can be accessed like an array.
- * But you can only do this to read data. Thus an {@link UnsupportedOperationException}
+ * But you can only do this to read data. Thus, an {@link UnsupportedOperationException}
  * is thrown when you try to unset data or to manipulate them.
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
  */
-final class DocumentData implements \ArrayAccess
+final class DocumentData implements ArrayAccess
 {
-    private $data = array();
+    private array $data;
 
-    public function __construct(array $data = array())
+    public function __construct(array $data = [])
     {
         $this->data = $data;
     }
@@ -45,7 +47,7 @@ final class DocumentData implements \ArrayAccess
     public function offsetGet($offset)
     {
         if (!isset($this->data[$offset])) {
-            throw new \InvalidArgumentException(sprintf('No data for name "%s" registered.', $offset));
+            throw new InvalidArgumentException(sprintf('No data for name "%s" registered.', $offset));
         }
 
         return $this->data[$offset];

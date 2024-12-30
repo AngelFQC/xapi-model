@@ -20,10 +20,10 @@ use Xabbuh\XApi\Model\LanguageMap;
  */
 final class InteractionComponent
 {
-    private $id;
-    private $description;
+    private string $id;
+    private ?LanguageMap $description;
 
-    public function __construct(string $id, LanguageMap $description = null)
+    public function __construct(string $id, ?LanguageMap $description = null)
     {
         $this->id = $id;
         $this->description = $description;

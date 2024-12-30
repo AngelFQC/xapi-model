@@ -11,6 +11,9 @@
 
 namespace Xabbuh\XApi\Model;
 
+use ArrayAccess;
+use InvalidArgumentException;
+use SplObjectStorage;
 use Xabbuh\XApi\Common\Exception\UnsupportedOperationException;
 
 /**
@@ -18,18 +21,18 @@ use Xabbuh\XApi\Common\Exception\UnsupportedOperationException;
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
  */
-final class Extensions implements \ArrayAccess
+final class Extensions implements ArrayAccess
 {
-    private $extensions;
+    private array $extensions;
 
-    public function __construct(\SplObjectStorage $extensions = null)
+    public function __construct(?SplObjectStorage $extensions = null)
     {
         $this->extensions = array();
 
         if (null !== $extensions) {
             foreach ($extensions as $iri) {
                 if (!$iri instanceof IRI) {
-                    throw new \InvalidArgumentException(sprintf('Expected an IRI instance as key (got %s).', is_object($iri) ? get_class($iri) : gettype($iri)));
+                    throw new InvalidArgumentException(sprintf('Expected an IRI instance as key (got %s).', is_object($iri) ? get_class($iri) : gettype($iri)));
                 }
 
                 $this->extensions[$iri->getValue()] = $extensions[$iri];
@@ -43,7 +46,7 @@ final class Extensions implements \ArrayAccess
     public function offsetExists($offset): bool
     {
         if (!$offset instanceof IRI) {
-            throw new \InvalidArgumentException(sprintf('Expected an IRI instance as key (got %s).', is_object($offset) ? get_class($offset) : gettype($offset)));
+            throw new InvalidArgumentException(sprintf('Expected an IRI instance as key (got %s).', is_object($offset) ? get_class($offset) : gettype($offset)));
         }
 
         return isset($this->extensions[$offset->getValue()]);
@@ -55,11 +58,11 @@ final class Extensions implements \ArrayAccess
     public function offsetGet($offset)
     {
         if (!$offset instanceof IRI) {
-            throw new \InvalidArgumentException(sprintf('Expected an IRI instance as key (got %s).', is_object($offset) ? get_class($offset) : gettype($offset)));
+            throw new InvalidArgumentException(sprintf('Expected an IRI instance as key (got %s).', is_object($offset) ? get_class($offset) : gettype($offset)));
         }
 
         if (!array_key_exists($offset->getValue(), $this->extensions)) {
-            throw new \InvalidArgumentException(sprintf('No extension for key "%s" registered.', $offset->getValue()));
+            throw new InvalidArgumentException(sprintf('No extension for key "%s" registered.', $offset->getValue()));
         }
 
         return $this->extensions[$offset->getValue()];
@@ -85,9 +88,9 @@ final class Extensions implements \ArrayAccess
         throw new UnsupportedOperationException('xAPI statement extensions are immutable.');
     }
 
-    public function getExtensions(): \SplObjectStorage
+    public function getExtensions(): SplObjectStorage
     {
-        $extensions = new \SplObjectStorage();
+        $extensions = new SplObjectStorage();
 
         foreach ($this->extensions as $iri => $value) {
             $extensions->attach(IRI::fromString($iri), $value);

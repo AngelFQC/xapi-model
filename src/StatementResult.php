@@ -19,11 +19,11 @@ namespace Xabbuh\XApi\Model;
  */
 final class StatementResult
 {
-    private $statements;
-    private $moreUrlPath;
+    private array $statements;
+    private ?IRL $moreUrlPath;
 
     /**
-     * @param Statement[] $statements The collection of Statements
+     * @param array<int, Statement> $statements The collection of Statements
      */
     public function __construct(array $statements, IRL $moreUrlPath = null)
     {
@@ -34,7 +34,7 @@ final class StatementResult
     /**
      * Returns the Statements.
      *
-     * @return Statement[]
+     * @return array<int, Statement>
      */
     public function getStatements(): array
     {

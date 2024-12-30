@@ -18,7 +18,7 @@ namespace Xabbuh\XApi\Model;
  */
 final class StatementReference extends StatementObject
 {
-    private $statementId;
+    private StatementId $statementId;
 
     public function __construct(StatementId $statementId)
     {

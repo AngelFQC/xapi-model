@@ -18,7 +18,7 @@ namespace Xabbuh\XApi\Model;
  */
 abstract class Profile
 {
-    private $profileId;
+    private string $profileId;
 
     public function __construct(string $profileId)
     {

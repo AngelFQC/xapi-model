@@ -11,6 +11,7 @@
 
 namespace Xabbuh\XApi\Model;
 
+use DateTime;
 use Xabbuh\XApi\Model\Exception\InvalidStateException;
 
 /*
@@ -20,57 +21,57 @@ use Xabbuh\XApi\Model\Exception\InvalidStateException;
  */
 final class StatementFactory
 {
-    private $id;
-    private $actor;
-    private $verb;
-    private $object;
-    private $result;
-    private $context;
-    private $created;
-    private $stored;
-    private $authority;
+    private ?StatementId $id;
+    private ?Actor $actor;
+    private ?Verb $verb;
+    private ?StatementObject $object;
+    private ?Result $result;
+    private ?Context $context;
+    private ?DateTime $created;
+    private ?DateTime $stored;
+    private ?Actor $authority;
 
-    public function withId(StatementId $id): void
+    public function withId(?StatementId $id): void
     {
         $this->id = $id;
     }
 
-    public function withActor(Actor $actor): void
+    public function withActor(?Actor $actor): void
     {
         $this->actor = $actor;
     }
 
-    public function withVerb(Verb $verb): void
+    public function withVerb(?Verb $verb): void
     {
         $this->verb = $verb;
     }
 
-    public function withObject(StatementObject $object): void
+    public function withObject(?StatementObject $object): void
     {
         $this->object = $object;
     }
 
-    public function withResult(Result $result = null): void
+    public function withResult(?Result $result = null): void
     {
         $this->result = $result;
     }
 
-    public function withContext(Context $context = null): void
+    public function withContext(?Context $context = null): void
     {
         $this->context = $context;
     }
 
-    public function withCreated(\DateTime $created = null): void
+    public function withCreated(?DateTime $created = null): void
     {
         $this->created = $created;
     }
 
-    public function withStored(\DateTime $stored = null): void
+    public function withStored(?DateTime $stored = null): void
     {
         $this->stored = $stored;
     }
 
-    public function withAuthority(Actor $authority = null): void
+    public function withAuthority(?Actor $authority = null): void
     {
         $this->authority = $authority;
     }

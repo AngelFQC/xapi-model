@@ -19,15 +19,21 @@ namespace Xabbuh\XApi\Model;
  */
 final class Result
 {
-    private $score;
-    private $success;
-    private $completion;
-    private $response;
-    private $duration;
-    private $extensions;
+    private ?Score $score;
+    private ?bool $success;
+    private ?bool $completion;
+    private ?string $response;
+    private ?string $duration;
+    private ?Extensions $extensions;
 
-    public function __construct(Score $score = null, bool $success = null, bool $completion = null, string $response = null, string $duration = null, Extensions $extensions = null)
-    {
+    public function __construct(
+        ?Score $score = null,
+        ?bool $success = null,
+        ?bool $completion = null,
+        ?string $response = null,
+        ?string $duration = null,
+        ?Extensions $extensions = null
+    ) {
         $this->score = $score;
         $this->success = $success;
         $this->completion = $completion;
@@ -36,7 +42,7 @@ final class Result
         $this->extensions = $extensions;
     }
 
-    public function withScore(Score $score = null): self
+    public function withScore(?Score $score = null): self
     {
         $result = clone $this;
         $result->score = $score;
@@ -44,7 +50,7 @@ final class Result
         return $result;
     }
 
-    public function withSuccess(bool $success = null): self
+    public function withSuccess(?bool $success = null): self
     {
         $result = clone $this;
         $result->success = $success;
@@ -52,7 +58,7 @@ final class Result
         return $result;
     }
 
-    public function withCompletion(bool $completion = null): self
+    public function withCompletion(?bool $completion = null): self
     {
         $result = clone $this;
         $result->completion = $completion;
@@ -60,7 +66,7 @@ final class Result
         return $result;
     }
 
-    public function withResponse(string $response = null): self
+    public function withResponse(?string $response = null): self
     {
         $result = clone $this;
         $result->response = $response;
@@ -68,7 +74,7 @@ final class Result
         return $result;
     }
 
-    public function withDuration(string $duration = null): self
+    public function withDuration(?string $duration = null): self
     {
         $result = clone $this;
         $result->duration = $duration;
@@ -76,7 +82,7 @@ final class Result
         return $result;
     }
 
-    public function withExtensions(Extensions $extensions = null): self
+    public function withExtensions(?Extensions $extensions = null): self
     {
         $result = clone $this;
         $result->extensions = $extensions;
@@ -93,7 +99,7 @@ final class Result
     }
 
     /**
-     * Returns whether or not the user finished a task successfully.
+     * Returns whether the user finished a task successfully.
      */
     public function getSuccess(): ?bool
     {

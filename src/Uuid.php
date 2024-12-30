@@ -11,6 +11,7 @@
 
 namespace Xabbuh\XApi\Model;
 
+use Exception;
 use Ramsey\Uuid\Uuid as RamseyUuid;
 use Rhumsaa\Uuid\Uuid as RhumsaaUuid;
 
@@ -41,13 +42,15 @@ final class Uuid
     /**
      * Generate a version 1 UUID from a host ID, sequence number, and the current time.
      *
-     * @param int|string $node     a 48-bit number representing the hardware address
+     * @param null     $node     a 48-bit number representing the hardware address
      *                             This number may be represented as an integer or a hexadecimal string
-     * @param int        $clockSeq a 14-bit number used to help avoid duplicates that
+     * @param int|null $clockSeq a 14-bit number used to help avoid duplicates that
      *                             could arise when the clock is set backwards in time or if the node ID
      *                             changes
+     * @return Uuid
+     * @throws Exception
      */
-    public static function uuid1($node = null, int $clockSeq = null): self
+    public static function uuid1($node = null, ?int $clockSeq = null): self
     {
         if (class_exists(RhumsaaUuid::class)) {
             return new self(RhumsaaUuid::uuid1($node, $clockSeq));
@@ -74,6 +77,8 @@ final class Uuid
 
     /**
      * Generate a version 4 (random) UUID.
+     *
+     * @throws Exception
      */
     public static function uuid4(): self
     {

@@ -18,7 +18,7 @@ namespace Xabbuh\XApi\Model;
  */
 final class StateDocument extends Document
 {
-    private $state;
+    private State $state;
 
     public function __construct(State $state, DocumentData $data)
     {

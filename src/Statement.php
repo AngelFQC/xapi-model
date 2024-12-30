@@ -11,6 +11,8 @@
 
 namespace Xabbuh\XApi\Model;
 
+use DateTime;
+
 /**
  * An Experience API {@link https://github.com/adlnet/xAPI-Spec/blob/master/xAPI.md#statement Statement}.
  *
@@ -18,23 +20,34 @@ namespace Xabbuh\XApi\Model;
  */
 final class Statement
 {
-    private $id;
-    private $verb;
-    private $actor;
-    private $object;
-    private $result;
-    private $authority;
-    private $created;
-    private $stored;
-    private $context;
-    private $attachments;
-    private $version;
+    private ?StatementId $id;
+    private Verb $verb;
+    private Actor $actor;
+    private StatementObject $object;
+    private ?Result $result;
+    private ?Actor $authority;
+    private ?DateTime $created;
+    private ?DateTime $stored;
+    private ?Context $context;
+    private ?array $attachments;
+    private ?string $version;
 
     /**
      * @param Attachment[]|null $attachments
      */
-    public function __construct(StatementId $id = null, Actor $actor, Verb $verb, StatementObject $object, Result $result = null, Actor $authority = null, \DateTime $created = null, \DateTime $stored = null, Context $context = null, array $attachments = null, string $version = null)
-    {
+    public function __construct(
+        ?StatementId $id,
+        Actor $actor,
+        Verb $verb,
+        StatementObject $object,
+        ?Result $result = null,
+        ?Actor $authority = null,
+        ?DateTime $created = null,
+        ?DateTime $stored = null,
+        ?Context $context = null,
+        ?array $attachments = null,
+        ?string $version = null
+    ) {
         $this->id = $id;
         $this->actor = $actor;
         $this->verb = $verb;
@@ -48,7 +61,7 @@ final class Statement
         $this->version = $version;
     }
 
-    public function withId(StatementId $id = null): self
+    public function withId(?StatementId $id = null): self
     {
         $statement = clone $this;
         $statement->id = $id;
@@ -80,7 +93,7 @@ final class Statement
         return $statement;
     }
 
-    public function withResult(Result $result = null): self
+    public function withResult(?Result $result = null): self
     {
         $statement = clone $this;
         $statement->result = $result;
@@ -92,7 +105,7 @@ final class Statement
      * Creates a new Statement based on the current one containing an Authority
      * that asserts the Statement true.
      */
-    public function withAuthority(Actor $authority = null): self
+    public function withAuthority(?Actor $authority = null): self
     {
         $statement = clone $this;
         $statement->authority = $authority;
@@ -100,7 +113,7 @@ final class Statement
         return $statement;
     }
 
-    public function withCreated(\DateTime $created = null): self
+    public function withCreated(?DateTime $created = null): self
     {
         $statement = clone $this;
         $statement->created = $created;
@@ -108,7 +121,7 @@ final class Statement
         return $statement;
     }
 
-    public function withStored(\DateTime $stored = null): self
+    public function withStored(?DateTime $stored = null): self
     {
         $statement = clone $this;
         $statement->stored = $stored;
@@ -116,7 +129,7 @@ final class Statement
         return $statement;
     }
 
-    public function withContext(Context $context = null): self
+    public function withContext(?Context $context = null): self
     {
         $statement = clone $this;
         $statement->context = $context;
@@ -127,7 +140,7 @@ final class Statement
     /**
      * @param Attachment[]|null $attachments
      */
-    public function withAttachments(array $attachments = null): self
+    public function withAttachments(?array $attachments = null): self
     {
         $statement = clone $this;
         $statement->attachments = null !== $attachments ? array_values($attachments) : null;
@@ -135,7 +148,7 @@ final class Statement
         return $statement;
     }
 
-    public function withVersion(string $version = null): self
+    public function withVersion(?string $version = null): self
     {
         $statement = clone $this;
         $statement->version = $version;
@@ -195,7 +208,7 @@ final class Statement
      * Returns the timestamp of when the events described in this statement
      * occurred.
      */
-    public function getCreated(): ?\DateTime
+    public function getCreated(): ?DateTime
     {
         return $this->created;
     }
@@ -203,7 +216,7 @@ final class Statement
     /**
      * Returns the timestamp of when this statement was recorded by the LRS.
      */
-    public function getStored(): ?\DateTime
+    public function getStored(): ?DateTime
     {
         return $this->stored;
     }
@@ -230,7 +243,7 @@ final class Statement
     }
 
     /**
-     * Tests whether or not this Statement is a void Statement (i.e. it voids
+     * Tests whether this Statement is a void Statement (i.e. it voids
      * another Statement).
      */
     public function isVoidStatement(): bool

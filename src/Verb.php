@@ -18,10 +18,10 @@ namespace Xabbuh\XApi\Model;
  */
 final class Verb
 {
-    private $id;
-    private $display;
+    private IRI $id;
+    private ?LanguageMap $display;
 
-    public function __construct(IRI $id, LanguageMap $display = null)
+    public function __construct(IRI $id, ?LanguageMap $display = null)
     {
         $this->id = $id;
         $this->display = $display;
@@ -36,7 +36,7 @@ final class Verb
     }
 
     /**
-     * Returns the human readable representation of the Verb in one or more languages.
+     * Returns the human-readable representation of the Verb in one or more languages.
      */
     public function getDisplay(): ?LanguageMap
     {
@@ -84,7 +84,7 @@ final class Verb
      */
     public function isVoidVerb(): bool
     {
-        return $this->id->equals(IRI::fromString('http://adlnet.gov/expapi/verbs/voided'));
+        return $this->id->equals(IRI::fromString('https://adlnet.gov/expapi/verbs/voided'));
     }
 
     /**
@@ -92,6 +92,6 @@ final class Verb
      */
     public static function createVoidVerb(): self
     {
-        return new Verb(IRI::fromString('http://adlnet.gov/expapi/verbs/voided'));
+        return new Verb(IRI::fromString('https://adlnet.gov/expapi/verbs/voided'));
     }
 }

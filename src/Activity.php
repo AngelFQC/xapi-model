@@ -18,10 +18,10 @@ namespace Xabbuh\XApi\Model;
  */
 final class Activity extends StatementObject
 {
-    private $id;
-    private $definition;
+    private IRI $id;
+    private ?Definition $definition;
 
-    public function __construct(IRI $id, Definition $definition = null)
+    public function __construct(IRI $id, ?Definition $definition = null)
     {
         $this->id = $id;
         $this->definition = $definition;

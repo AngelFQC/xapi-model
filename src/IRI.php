@@ -11,6 +11,8 @@
 
 namespace Xabbuh\XApi\Model;
 
+use InvalidArgumentException;
+
 /**
  * An internationalized resource identifier according to RFC 3987.
  *
@@ -18,19 +20,19 @@ namespace Xabbuh\XApi\Model;
  */
 final class IRI
 {
-    private $value;
+    private string $value;
 
     private function __construct()
     {
     }
 
     /**
-     * @throws \InvalidArgumentException if the given value is no valid IRI
+     * @throws InvalidArgumentException if the given value is no valid IRI
      */
     public static function fromString(string $value): self
     {
         if (false === filter_var($value, FILTER_VALIDATE_URL)) {
-            throw new \InvalidArgumentException('IRI "'.$value.'" is not valid.');
+            throw new InvalidArgumentException('IRI "'.$value.'" is not valid.');
         }
 
         $iri = new self();

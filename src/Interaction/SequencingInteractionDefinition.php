@@ -24,23 +24,33 @@ use Xabbuh\XApi\Model\LanguageMap;
  */
 final class SequencingInteractionDefinition extends InteractionDefinition
 {
-    private $choices;
+    /**
+     * @var array<int, InteractionComponent>|null
+     */
+    private ?array $choices;
 
     /**
-     * @param string[]|null               $correctResponsesPattern
-     * @param InteractionComponent[]|null $choices
+     * @param array<int, string>|null               $correctResponsesPattern
+     * @param array<int, InteractionComponent>|null $choices
      */
-    public function __construct(LanguageMap $name = null, LanguageMap $description = null, IRI $type = null, IRL $moreInfo = null, Extensions $extensions = null, array $correctResponsesPattern = null, array $choices = null)
-    {
+    public function __construct(
+        ?LanguageMap $name = null,
+        ?LanguageMap $description = null,
+        ?IRI $type = null,
+        ?IRL $moreInfo = null,
+        ?Extensions $extensions = null,
+        ?array $correctResponsesPattern = null,
+        ?array $choices = null
+    ) {
         parent::__construct($name, $description, $type, $moreInfo, $extensions, $correctResponsesPattern);
 
         $this->choices = $choices;
     }
 
     /**
-     * @param InteractionComponent[]|null $choices
+     * @param array<int, InteractionComponent>|null $choices
      */
-    public function withChoices(array $choices = null): self
+    public function withChoices(?array $choices = null): self
     {
         $interaction = clone $this;
         $interaction->choices = $choices;
@@ -49,7 +59,7 @@ final class SequencingInteractionDefinition extends InteractionDefinition
     }
 
     /**
-     * @return InteractionComponent[]|null
+     * @return array<int, InteractionComponent>|null
      */
     public function getChoices(): ?array
     {

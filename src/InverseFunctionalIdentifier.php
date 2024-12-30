@@ -18,10 +18,10 @@ namespace Xabbuh\XApi\Model;
  */
 final class InverseFunctionalIdentifier
 {
-    private $mbox;
-    private $mboxSha1Sum;
-    private $openId;
-    private $account;
+    private ?IRI $mbox;
+    private ?string $mboxSha1Sum;
+    private ?string $openId;
+    private ?Account $account;
 
     /**
      * Use one of the with*() factory methods to obtain an InverseFunctionalIdentifier

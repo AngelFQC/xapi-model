@@ -12,43 +12,43 @@
 namespace Xabbuh\XApi\Model;
 
 /**
- * Combined informations from multiple {@link Agent agents}.
+ * Combined information from multiple {@link Agent agents}.
  *
  * @author Jérôme Parmentier <jerome.parmentier@acensi.fr>
  */
 final class Person
 {
     /**
-     * @var string[] List of names of Agents
+     * @var array<int, string> List of names of Agents
      */
-    private $names = array();
+    private array $names = [];
 
     /**
      * @var IRI[] List of mailto IRIs of Agents
      */
-    private $mboxes = array();
+    private array $mboxes = [];
 
     /**
-     * @var string[] List of the SHA1 hashes of mailto IRIs of Agents
+     * @var array<int, string> List of the SHA1 hashes of mailto IRIs of Agents
      */
-    private $mboxSha1Sums = array();
+    private array $mboxSha1Sums = [];
 
     /**
-     * @var string[] List of openids that uniquely identify the Agents
+     * @var array<int, string> List of openids that uniquely identify the Agents
      */
-    private $openIds = array();
+    private array $openIds = [];
 
     /**
-     * @var Account[] List of accounts of Agents
+     * @var array<int, Account> List of accounts of Agents
      */
-    private $accounts = array();
+    private array $accounts = [];
 
     private function __construct()
     {
     }
 
     /**
-     * @param Agent[] $agents
+     * @param array<int, Agent> $agents
      */
     public static function createFromAgents(array $agents): self
     {
@@ -82,7 +82,7 @@ final class Person
     }
 
     /**
-     * @return string[]
+     * @return array<int, string>
      */
     public function getNames(): array
     {
@@ -98,7 +98,7 @@ final class Person
     }
 
     /**
-     * @return string[]
+     * @return array<int, string>
      */
     public function getMboxSha1Sums(): array
     {
@@ -106,7 +106,7 @@ final class Person
     }
 
     /**
-     * @return string[]
+     * @return array<int, string>
      */
     public function getOpenIds(): array
     {

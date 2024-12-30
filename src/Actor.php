@@ -18,10 +18,10 @@ namespace Xabbuh\XApi\Model;
  */
 abstract class Actor extends StatementObject
 {
-    private $iri;
-    private $name;
+    private ?InverseFunctionalIdentifier $iri;
+    private ?string $name;
 
-    public function __construct(InverseFunctionalIdentifier $iri = null, string $name = null)
+    public function __construct(?InverseFunctionalIdentifier $iri = null, ?string $name = null)
     {
         $this->iri = $iri;
         $this->name = $name;
@@ -48,25 +48,25 @@ abstract class Actor extends StatementObject
      *
      * Two actors are equal if and only if all of their properties are equal.
      */
-    public function equals(StatementObject $actor): bool
+    public function equals(StatementObject $object): bool
     {
-        if (!parent::equals($actor)) {
+        if (!parent::equals($object)) {
             return false;
         }
 
-        if (!$actor instanceof Actor) {
+        if (!$object instanceof Actor) {
             return false;
         }
 
-        if ($this->name !== $actor->name) {
+        if ($this->name !== $object->name) {
             return false;
         }
 
-        if (null !== $this->iri xor null !== $actor->iri) {
+        if (null !== $this->iri xor null !== $object->iri) {
             return false;
         }
 
-        if (null !== $this->iri && null !== $actor->iri && !$this->iri->equals($actor->iri)) {
+        if (null !== $this->iri && null !== $object->iri && !$this->iri->equals($object->iri)) {
             return false;
         }
 

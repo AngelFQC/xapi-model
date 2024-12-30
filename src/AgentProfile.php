@@ -18,7 +18,7 @@ namespace Xabbuh\XApi\Model;
  */
 final class AgentProfile extends Profile
 {
-    private $agent;
+    private Agent $agent;
 
     public function __construct(string $profileId, Agent $agent)
     {

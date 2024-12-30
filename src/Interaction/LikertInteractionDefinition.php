@@ -25,23 +25,30 @@ use Xabbuh\XApi\Model\LanguageMap;
  */
 final class LikertInteractionDefinition extends InteractionDefinition
 {
-    private $scale;
+    private ?array $scale;
 
     /**
-     * @param string[]|null               $correctResponsesPattern
-     * @param InteractionComponent[]|null $scale
+     * @param array<int, string>|null               $correctResponsesPattern
+     * @param array<int, InteractionComponent>|null $scale
      */
-    public function __construct(LanguageMap $name = null, LanguageMap $description = null, IRI $type = null, IRL $moreInfo = null, Extensions $extensions = null, array $correctResponsesPattern = null, array $scale = null)
-    {
+    public function __construct(
+        ?LanguageMap $name = null,
+        ?LanguageMap $description = null,
+        ?IRI $type = null,
+        ?IRL $moreInfo = null,
+        ?Extensions $extensions = null,
+        ?array $correctResponsesPattern = null,
+        ?array $scale = null
+    ) {
         parent::__construct($name, $description, $type, $moreInfo, $extensions, $correctResponsesPattern);
 
         $this->scale = $scale;
     }
 
     /**
-     * @param InteractionComponent[]|null $scale
+     * @param array<int, InteractionComponent>|null $scale
      */
-    public function withScale(array $scale = null): self
+    public function withScale(?array $scale = null): self
     {
         $interaction = clone $this;
         $interaction->scale = $scale;
@@ -50,7 +57,7 @@ final class LikertInteractionDefinition extends InteractionDefinition
     }
 
     /**
-     * @return InteractionComponent[]|null
+     * @return array<int, InteractionComponent>|null
      */
     public function getScale(): ?array
     {

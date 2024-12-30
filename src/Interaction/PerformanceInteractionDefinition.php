@@ -25,23 +25,33 @@ use Xabbuh\XApi\Model\LanguageMap;
  */
 final class PerformanceInteractionDefinition extends InteractionDefinition
 {
-    private $steps;
+    /**
+     * @var array<int, InteractionComponent>|null
+     */
+    private ?array $steps;
 
     /**
-     * @param string[]|null               $correctResponsesPattern
-     * @param InteractionComponent[]|null $steps
+     * @param array<int, string>|null               $correctResponsesPattern
+     * @param array<int, InteractionComponent>|null $steps
      */
-    public function __construct(LanguageMap $name = null, LanguageMap $description = null, IRI $type = null, IRL $moreInfo = null, Extensions $extensions = null, array $correctResponsesPattern = null, array $steps = null)
-    {
+    public function __construct(
+        ?LanguageMap $name = null,
+        ?LanguageMap $description = null,
+        ?IRI $type = null,
+        ?IRL $moreInfo = null,
+        ?Extensions $extensions = null,
+        ?array $correctResponsesPattern = null,
+        ?array $steps = null
+    ) {
         parent::__construct($name, $description, $type, $moreInfo, $extensions, $correctResponsesPattern);
 
         $this->steps = $steps;
     }
 
     /**
-     * @param InteractionComponent[]|null $steps
+     * @param array<int, InteractionComponent>|null $steps
      */
-    public function withSteps(array $steps = null): self
+    public function withSteps(?array $steps = null): self
     {
         $interaction = clone $this;
         $interaction->steps = $steps;
@@ -50,7 +60,7 @@ final class PerformanceInteractionDefinition extends InteractionDefinition
     }
 
     /**
-     * @return InteractionComponent[]|null
+     * @return array<int, InteractionComponent>|null
      */
     public function getSteps(): ?array
     {

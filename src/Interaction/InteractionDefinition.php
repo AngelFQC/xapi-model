@@ -24,20 +24,29 @@ use Xabbuh\XApi\Model\LanguageMap;
  */
 abstract class InteractionDefinition extends Definition
 {
-    private $correctResponsesPattern;
+    /**
+     * @var array<int, string>|null
+     */
+    private ?array $correctResponsesPattern;
 
     /**
-     * @param string[]|null $correctResponsesPattern
+     * @param array<int, string>|null $correctResponsesPattern
      */
-    public function __construct(LanguageMap $name = null, LanguageMap $description = null, IRI $type = null, IRL $moreInfo = null, Extensions $extensions = null, array $correctResponsesPattern = null)
-    {
+    public function __construct(
+        ?LanguageMap $name = null,
+        ?LanguageMap $description = null,
+        ?IRI $type = null,
+        ?IRL $moreInfo = null,
+        ?Extensions $extensions = null,
+        ?array $correctResponsesPattern = null
+    ) {
         parent::__construct($name, $description, $type, $moreInfo, $extensions);
 
         $this->correctResponsesPattern = $correctResponsesPattern;
     }
 
     /**
-     * @param string[]|null $correctResponsesPattern
+     * @param array<int, string>|null $correctResponsesPattern
      */
     public function withCorrectResponsesPattern(array $correctResponsesPattern = null): self
     {
@@ -48,7 +57,7 @@ abstract class InteractionDefinition extends Definition
     }
 
     /**
-     * @return string[]|null
+     * @return array<int, string>|null
      */
     public function getCorrectResponsesPattern(): ?array
     {

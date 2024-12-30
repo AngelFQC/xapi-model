@@ -11,6 +11,8 @@
 
 namespace Xabbuh\XApi\Model;
 
+use InvalidArgumentException;
+
 /**
  * An internationalized resource locator.
  *
@@ -18,19 +20,19 @@ namespace Xabbuh\XApi\Model;
  */
 final class IRL
 {
-    private $value;
+    private string $value;
 
     private function __construct()
     {
     }
 
     /**
-     * @throws \InvalidArgumentException if the given value is no valid IRL
+     * @throws InvalidArgumentException if the given value is no valid IRL
      */
     public static function fromString(string $value): self
     {
         if (false === filter_var($value, FILTER_VALIDATE_URL)) {
-            throw new \InvalidArgumentException('IRI "'.$value.'" is not valid.');
+            throw new InvalidArgumentException('IRI "'.$value.'" is not valid.');
         }
 
         $iri = new self();

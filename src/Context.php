@@ -18,15 +18,15 @@ namespace Xabbuh\XApi\Model;
  */
 final class Context
 {
-    private $registration;
-    private $instructor;
-    private $team;
-    private $contextActivities;
-    private $revision;
-    private $platform;
-    private $language;
-    private $statement;
-    private $extensions;
+    private ?string $registration;
+    private ?Actor $instructor;
+    private ?Group $team;
+    private ?ContextActivities $contextActivities;
+    private ?string $revision;
+    private ?string $platform;
+    private ?string $language;
+    private ?StatementReference $statement;
+    private ?Extensions $extensions;
 
     public function withRegistration(string $registration): self
     {
@@ -167,7 +167,7 @@ final class Context
             return false;
         }
 
-        if ($this->contextActivities != $context->contextActivities) {
+        if ($this->contextActivities !== $context->contextActivities) {
             return false;
         }
 

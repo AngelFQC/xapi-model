@@ -11,6 +11,8 @@
 
 namespace Xabbuh\XApi\Model;
 
+use InvalidArgumentException;
+
 /**
  * An Experience API statement {@link https://github.com/adlnet/xAPI-Spec/blob/master/xAPI-Data.md#attachments attachment}.
  *
@@ -18,14 +20,14 @@ namespace Xabbuh\XApi\Model;
  */
 final class Attachment
 {
-    private $usageType;
-    private $contentType;
-    private $length;
-    private $sha2;
-    private $display;
-    private $description;
-    private $fileUrl;
-    private $content;
+    private IRI $usageType;
+    private string $contentType;
+    private int $length;
+    private string $sha2;
+    private LanguageMap $display;
+    private ?LanguageMap $description;
+    private ?IRL $fileUrl;
+    private ?string $content;
 
     /**
      * @param IRI              $usageType   The type of usage of this attachment
@@ -38,8 +40,16 @@ final class Attachment
      * @param string|null      $content     The raw attachment content, please note that the content is not validated against
      *                                      the given SHA-2 hash
      */
-    public function __construct(IRI $usageType, string $contentType, int $length, string $sha2, LanguageMap $display, LanguageMap $description = null, IRL $fileUrl = null, string $content = null)
-    {
+    public function __construct(
+        IRI $usageType,
+        string $contentType,
+        int $length,
+        string $sha2,
+        LanguageMap $display,
+        ?LanguageMap $description = null,
+        ?IRL $fileUrl = null,
+        ?string $content = null
+    ) {
         $this->validateContentType($contentType);
         $this->validateFileUrl($fileUrl, $content);
 
@@ -141,18 +151,18 @@ final class Attachment
         $parts = explode('/', $contentType);
 
         if (!in_array($parts[0], $topLevels)) {
-            throw new \InvalidArgumentException('Attachment contentType property if no valid.');
+            throw new InvalidArgumentException('Attachment contentType property if no valid.');
         }
     }
 
-    private function validateFileUrl(IRL $fileUrl = null, $content = null)
+    private function validateFileUrl(?IRL $fileUrl = null, ?string $content = null)
     {
         if (null === $fileUrl && null === $content) {
-            throw new \InvalidArgumentException('An attachment cannot be created without a file URL or raw content data.');
+            throw new InvalidArgumentException('An attachment cannot be created without a file URL or raw content data.');
         }
 
         if ($fileUrl && false === filter_var($fileUrl->getValue(), FILTER_VALIDATE_URL)) {
-            throw new \InvalidArgumentException('Attachment file URL is not valid.');
+            throw new InvalidArgumentException('Attachment file URL is not valid.');
         }
     }
 }

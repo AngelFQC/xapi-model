@@ -18,8 +18,8 @@ namespace Xabbuh\XApi\Model;
  */
 final class Account
 {
-    private $name;
-    private $homePage;
+    private string $name;
+    private IRL $homePage;
 
     public function __construct(string $name, IRL $homePage)
     {

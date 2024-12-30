@@ -18,17 +18,17 @@ namespace Xabbuh\XApi\Model;
  */
 final class State
 {
-    private $activity;
-    private $actor;
-    private $registrationId;
-    private $stateId;
+    private Activity $activity;
+    private Agent $actor;
+    private ?string $registrationId;
+    private string $stateId;
 
-    public function __construct(Activity $activity, Actor $actor, string $stateId, string $registrationId = null)
-    {
-        if (!$actor instanceof Agent) {
-            @trigger_error(sprintf('Passing an instance of "%s" as the second argument is deprecated since 1.2. In 4.0, only instances of "Xabbuh\XApi\Model\Agent" will be accepted.', get_class($actor)), E_USER_DEPRECATED);
-        }
-
+    public function __construct(
+        Activity $activity,
+        Agent $actor,
+        string $stateId,
+        ?string $registrationId = null
+    ) {
         $this->activity = $activity;
         $this->actor = $actor;
         $this->stateId = $stateId;
@@ -48,7 +48,7 @@ final class State
      *
      * @deprecated since 1.2, to be removed in 4.0
      */
-    public function getActor(): Actor
+    public function getActor(): Agent
     {
         @trigger_error(sprintf('The "%s()" method is deprecated since 1.2 and will be removed in 4.0, use "%s::getAgent()" instead.', __METHOD__, __CLASS__), E_USER_DEPRECATED);
 

@@ -11,6 +11,9 @@
 
 namespace Xabbuh\XApi\Model;
 
+use DateTime;
+use InvalidArgumentException;
+
 /**
  * A {@link Statement} included as part of a parent Statement.
  *
@@ -18,21 +21,31 @@ namespace Xabbuh\XApi\Model;
  */
 final class SubStatement extends StatementObject
 {
-    private $verb;
-    private $actor;
-    private $object;
-    private $result;
-    private $created;
-    private $context;
-    private $attachments;
+    private Verb $verb;
+    private Actor $actor;
+    private StatementObject $object;
+    private ?Result $result;
+    private ?DateTime $created;
+    private ?Context $context;
+    /**
+     * @var array<int, Attachment>|null
+     */
+    private ?array $attachments;
 
     /**
-     * @param Attachment[]|null $attachments
+     * @param array<int, Attachment>|null $attachments
      */
-    public function __construct(Actor $actor, Verb $verb, StatementObject $object, Result $result = null, Context $context = null, \DateTime $created = null, array $attachments = null)
-    {
+    public function __construct(
+        Actor $actor,
+        Verb $verb,
+        StatementObject $object,
+        ?Result $result = null,
+        ?Context $context = null,
+        ?DateTime $created = null,
+        ?array $attachments = null
+    ) {
         if ($object instanceof SubStatement) {
-            throw new \InvalidArgumentException('Nesting sub statements is forbidden by the xAPI spec.');
+            throw new InvalidArgumentException('Nesting sub statements is forbidden by the xAPI spec.');
         }
 
         $this->actor = $actor;
@@ -68,7 +81,7 @@ final class SubStatement extends StatementObject
         return $subStatement;
     }
 
-    public function withResult(Result $result): self
+    public function withResult(?Result $result): self
     {
         $subStatement = clone $this;
         $subStatement->result = $result;
@@ -76,7 +89,7 @@ final class SubStatement extends StatementObject
         return $subStatement;
     }
 
-    public function withCreated(\DateTime $created = null): self
+    public function withCreated(?DateTime $created = null): self
     {
         $statement = clone $this;
         $statement->created = $created;
@@ -84,7 +97,7 @@ final class SubStatement extends StatementObject
         return $statement;
     }
 
-    public function withContext(Context $context): self
+    public function withContext(?Context $context): self
     {
         $subStatement = clone $this;
         $subStatement->context = $context;
@@ -93,9 +106,9 @@ final class SubStatement extends StatementObject
     }
 
     /**
-     * @param Attachment[]|null $attachments
+     * @param array<int, Attachment>|null $attachments
      */
-    public function withAttachments(array $attachments = null): self
+    public function withAttachments(?array $attachments = null): self
     {
         $statement = clone $this;
         $statement->attachments = null !== $attachments ? array_values($attachments) : null;
@@ -139,7 +152,7 @@ final class SubStatement extends StatementObject
      * Returns the timestamp of when the events described in this statement
      * occurred.
      */
-    public function getCreated(): ?\DateTime
+    public function getCreated(): ?DateTime
     {
         return $this->created;
     }
@@ -153,7 +166,7 @@ final class SubStatement extends StatementObject
     }
 
     /**
-     * @return Attachment[]|null
+     * @return array<int, Attachment>|null
      */
     public function getAttachments(): ?array
     {
@@ -161,7 +174,7 @@ final class SubStatement extends StatementObject
     }
 
     /**
-     * Tests whether or not this Statement is a void Statement (i.e. it voids
+     * Tests whether this Statement is a void Statement (i.e. it voids
      * another Statement).
      */
     public function isVoidStatement(): bool
@@ -172,59 +185,59 @@ final class SubStatement extends StatementObject
     /**
      * {@inheritdoc}
      */
-    public function equals(StatementObject $statement): bool
+    public function equals(StatementObject $object): bool
     {
-        if (!$statement instanceof SubStatement) {
+        if (!$object instanceof SubStatement) {
             return false;
         }
 
-        if (!$this->actor->equals($statement->actor)) {
+        if (!$this->actor->equals($object->actor)) {
             return false;
         }
 
-        if (!$this->verb->equals($statement->verb)) {
+        if (!$this->verb->equals($object->verb)) {
             return false;
         }
 
-        if (!$this->object->equals($statement->object)) {
+        if (!$this->object->equals($object->object)) {
             return false;
         }
 
-        if (null === $this->result && null !== $statement->result) {
+        if (null === $this->result && null !== $object->result) {
             return false;
         }
 
-        if (null !== $this->result && null === $statement->result) {
+        if (null !== $this->result && null === $object->result) {
             return false;
         }
 
-        if (null !== $this->result && !$this->result->equals($statement->result)) {
+        if (null !== $this->result && !$this->result->equals($object->result)) {
             return false;
         }
 
-        if ($this->created != $statement->created) {
+        if ($this->created != $object->created) {
             return false;
         }
 
-        if (null !== $this->context xor null !== $statement->context) {
+        if (null !== $this->context xor null !== $object->context) {
             return false;
         }
 
-        if (null !== $this->context && null !== $statement->context && !$this->context->equals($statement->context)) {
+        if (null !== $this->context && null !== $object->context && !$this->context->equals($object->context)) {
             return false;
         }
 
-        if (null !== $this->attachments xor null !== $statement->attachments) {
+        if (null !== $this->attachments xor null !== $object->attachments) {
             return false;
         }
 
-        if (null !== $this->attachments && null !== $statement->attachments) {
-            if (count($this->attachments) !== count($statement->attachments)) {
+        if (null !== $this->attachments && null !== $object->attachments) {
+            if (count($this->attachments) !== count($object->attachments)) {
                 return false;
             }
 
             foreach ($this->attachments as $key => $attachment) {
-                if (!$attachment->equals($statement->attachments[$key])) {
+                if (!$attachment->equals($object->attachments[$key])) {
                     return false;
                 }
             }
